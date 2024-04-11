@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUIModule", "RUIModule.csproj", "{3D020443-F2CC-43CC-B375-F98BE2BC080B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D020443-F2CC-43CC-B375-F98BE2BC080B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D020443-F2CC-43CC-B375-F98BE2BC080B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D020443-F2CC-43CC-B375-F98BE2BC080B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D020443-F2CC-43CC-B375-F98BE2BC080B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFFB11AC-6849-4A78-996A-F43D91E75EA3}
+	EndGlobalSection
+EndGlobal
