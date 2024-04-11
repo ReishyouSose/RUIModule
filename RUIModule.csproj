@@ -64,16 +64,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="FNA">
-      <HintPath>E:\steam\steamapps\common\tModLoader\Libraries\FNA\1.0.0\FNA.dll</HintPath>
-    </Reference>
-    <Reference Include="ReLogic">
-      <HintPath>E:\steam\steamapps\common\tModLoader\Libraries\ReLogic\1.0.0\ReLogic.dll</HintPath>
-    </Reference>
-    <Reference Include="tModLoader">
-      <HintPath>E:\steam\steamapps\common\tModLoader\tModLoader.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <Import Project="..\tModLoader.targets" />
 
 </Project>
