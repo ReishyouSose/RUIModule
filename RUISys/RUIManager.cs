@@ -15,7 +15,7 @@ public class RUIManager : ModSystem
         {
             AssetLoader.Load();
             Ins = new RUISystem();
-            Ins.Load(mod);
+            Ins.Load(Mod);
             Main.OnResolutionChanged += v2 =>
             {
                 Ins.OnResolutionChange();
