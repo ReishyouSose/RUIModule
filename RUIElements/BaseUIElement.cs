@@ -537,9 +537,12 @@
                 //绘制自己，如果不隐藏UI部件
                 if (!Info.IsHidden)
                 {
-                    if (ReDraw == null) DrawSelf(sb);
-                    else ReDraw(sb);
-                    if (Info.IsMouseHover && hoverText is not null or "") Main.hoverItemName = hoverText;
+                    if (ReDraw == null)
+                        DrawSelf(sb);
+                    else
+                        ReDraw(sb);
+                    if (Info.IsMouseHover && hoverText is not null or "")
+                        Main.hoverItemName = hoverText;
                 }
             }
             //设定gd是画笔绑定的图像设备
@@ -843,21 +846,24 @@
         {
             Info.Left.Set(x, Xpercent);
             Info.Top.Set(y, Ypercent);
-            if (cal) Calculation();
+            if (cal)
+                Calculation();
         }
         public void SetPos(Vector2 pos, bool cal = true) => SetPos(pos.X, pos.Y, cal: cal);
         public void SetCenter(float x, float y, float Xpercent = 0, float Ypercent = 0, bool cal = true)
         {
             Info.Left.Set(x - Info.Width.Pixel / 2f, Xpercent);
             Info.Top.Set(y - Info.Height.Pixel / 2f, Ypercent);
-            if (cal) Calculation();
+            if (cal)
+                Calculation();
         }
         public void SetCenter(Vector2 pos, bool cal = true) => SetCenter(pos.X, pos.Y, cal: cal);
         public void SetSize(float x, float y, float xper = 0, float yper = 0, bool cal = true)
         {
             Info.Width.Set(x, xper);
             Info.Height.Set(y, yper);
-            if (cal) Calculation();
+            if (cal)
+                Calculation();
         }
         public void SetSize(Vector2 size, bool cal = true) => SetSize(size.X, size.Y, cal: cal);
         public void SetPercent(float x, float y)
@@ -883,10 +889,10 @@
                 uie.ResetState();
             }
         }
-        public void LockInteract(bool locked)
+        public void LockInteract(bool allow)
         {
-            Info.CanBeInteract = locked;
-            ChildrenElements.ForEach(x => x.LockInteract(locked));
+            Info.CanBeInteract = allow;
+            ChildrenElements.ForEach(x => x.LockInteract(allow));
         }
     }
 }
