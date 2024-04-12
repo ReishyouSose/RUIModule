@@ -15,10 +15,25 @@
             showArea = new(0, 0, opacity: 1);
             showArea.Info.HiddenOverflow = true;
             showArea.Info.RightMargin.Pixel = 40;
+            showArea.Events.OnLeftDown += evt => Expand();
+            showArea.ReDraw = sb =>
+            {
+                showArea.DrawSelf(sb);
+                Rectangle rec = showArea.HitBox();
+                Texture2D tex = Expanding ? AssetLoader.Fold : AssetLoader.Unfold;
+                Vector2 origin = tex.Size() / 2f;
+                Vector2 pos = rec.TopRight() + new Vector2(-origin.X - buttonXoffset, rec.Height / 2f);
+                sb.SimpleDraw(tex, pos, null, origin);
+            };
             parent.Register(showArea);
 
             expandArea = new(0, 0, opacity: 1);
             expandArea.Info.SetMargin(10);
+            expandArea.Events.UnLeftDown += evt =>
+            {
+                if (!showArea.Info.IsMouseHover && Expanding)
+                    Expand();
+            };
             expandArea.Info.IsVisible = false;
             parent.Register(expandArea);
 
@@ -33,15 +48,6 @@
 
             this.lockUI = lockUI;
             this.clone = clone;
-            Info.IsSensitive = true;
-        }
-        public override void LoadEvents()
-        {
-            Events.OnLeftDown += evt => Expand();
-            Events.UnLeftDown += evt =>
-            {
-                if (Expanding) Expand();
-            };
         }
         public void Expand()
         {
@@ -53,7 +59,6 @@
         {
             showArea.RemoveAll();
             showArea.Register(clone(uie));
-
         }
         public void AddElement(T uie)
         {
@@ -65,16 +70,6 @@
         {
             showArea.RemoveAll();
             expandView.ClearAllElements();
-        }
-
-        public override void DrawChildren(SpriteBatch sb)
-        {
-            base.DrawChildren(sb);
-            Rectangle rec = showArea.HitBox();
-            Texture2D tex = Expanding ? AssetLoader.Fold : AssetLoader.Unfold;
-            Vector2 origin = tex.Size() / 2f;
-            Vector2 pos = rec.TopRight() + new Vector2(-origin.X - buttonXoffset, rec.Height / 2f);
-            sb.SimpleDraw(tex, pos, null, origin);
         }
     }
 }
