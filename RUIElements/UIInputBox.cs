@@ -119,12 +119,12 @@ namespace RUIModule.RUIElements
         private DynamicSpriteFont font;
         private KeyCooldown up, down, left, right, enter;
 
-        public UIInputBox(string text = "", Point cursorPosition = default, Color color = default, Vector2 symSizeOffice = default)
+        public UIInputBox(string text = "", Point cursorPosition = default, Color? color = null, Vector2 symSizeOffice = default)
         {
             prompt = text;
             Text = "";
             _cursorPosition = cursorPosition;
-            _color = color;
+            _color = color ?? Color.White;
             _cursorPosition = Point.Zero;
             offset = Vector2.Zero;
             symHitBox = Rectangle.Empty;
@@ -314,6 +314,7 @@ namespace RUIModule.RUIElements
         {
             Text = "";
             IsEnableIME = false;
+            _cursorPosition = Point.Zero;
             OnInputText?.Invoke(Text);
         }
     }

@@ -583,7 +583,7 @@
                 sb.End();
                 sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
                     DepthStencilState.None, overflowHiddenRasterizerState, null);
-                DrawRec(sb, Info.HitBox.ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[0].Value, false);
+                DrawRec(sb, HitBox().ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[0].Value, false);
                 sb.End();
                 sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
                     DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
@@ -594,7 +594,7 @@
                 sb.End();
                 sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
                     DepthStencilState.None, overflowHiddenRasterizerState, null);
-                DrawRec(sb, Info.HitBox.ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[1].Value, false);
+                DrawRec(sb, HitBox(false).ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[1].Value, false);
                 sb.End();
                 sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
                     DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);

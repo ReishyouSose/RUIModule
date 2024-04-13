@@ -107,9 +107,12 @@ public static class RUIHelper
     public static string GetPath(this object type, string fileName) => type.GetPath(false) + fileName;
     public static Texture2D Tex(this Entity entity)
     {
-        if (entity is Projectile proj) return TextureAssets.Projectile[proj.type].Value;
-        if (entity is NPC npc) return TextureAssets.Npc[npc.type].Value;
-        if (entity is Item item) return TextureAssets.Item[item.type].Value;
+        if (entity is Projectile proj)
+            return TextureAssets.Projectile[proj.type].Value;
+        if (entity is NPC npc)
+            return TextureAssets.Npc[npc.type].Value;
+        if (entity is Item item)
+            return TextureAssets.Item[item.type].Value;
         throw new Exception("不支持的Entity类型");
     }
     public static Rectangle ScaleRec(this Rectangle r, Vector2 scale)
@@ -158,6 +161,16 @@ public static class RUIHelper
 
     public static void DrawRec(SpriteBatch sb, Rectangle rec, float width, Color color, bool toScr = true)
     {
+        if (rec.Width == 0)
+        {
+            Main.NewText("矩形宽为零");
+            return;
+        }
+        if (rec.Height == 0)
+        {
+            Main.NewText("矩形高为零");
+            return;
+        }
         Vector2 scrPos = toScr ? Main.screenPosition : Vector2.Zero;
         DrawLine(sb, rec.TopLeft() + scrPos, rec.TopRight() - scrPos, width, color);
         DrawLine(sb, rec.TopRight() + scrPos, rec.BottomRight() - scrPos, width, color);

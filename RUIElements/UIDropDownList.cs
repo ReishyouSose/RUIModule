@@ -65,11 +65,11 @@
             uie.Events.OnLeftDown += evt => ChangeShowElement(uie);
             expandView.AddElement(uie);
         }
-
         public void ClearAllElements()
         {
             showArea.RemoveAll();
             expandView.ClearAllElements();
         }
+
     }
 }
