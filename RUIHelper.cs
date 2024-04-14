@@ -159,9 +159,9 @@ public static class RUIHelper
     }
     public static Texture2D T2D(string path) => ModContent.Request<Texture2D>(path, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-    public static void DrawRec(SpriteBatch sb, Rectangle rec, float width, Color color, bool toScr = true)
+    public static void DrawRec(SpriteBatch sb, Rectangle rec, float width, Color color, bool toScr = false)
     {
-        if (rec.Width == 0)
+        /*if (rec.Width == 0)
         {
             Main.NewText("矩形宽为零");
             return;
@@ -170,12 +170,19 @@ public static class RUIHelper
         {
             Main.NewText("矩形高为零");
             return;
+        }*/
+        try
+        {
+            Vector2 scrPos = toScr ? Main.screenPosition : Vector2.Zero;
+            DrawLine(sb, rec.TopLeft() + scrPos, rec.TopRight() - scrPos, width, color);
+            DrawLine(sb, rec.TopRight() + scrPos, rec.BottomRight() - scrPos, width, color);
+            DrawLine(sb, rec.BottomRight() + scrPos, rec.BottomLeft() - scrPos, width, color);
+            DrawLine(sb, rec.BottomLeft() + scrPos, rec.TopLeft() - scrPos, width, color);
         }
-        Vector2 scrPos = toScr ? Main.screenPosition : Vector2.Zero;
-        DrawLine(sb, rec.TopLeft() + scrPos, rec.TopRight() - scrPos, width, color);
-        DrawLine(sb, rec.TopRight() + scrPos, rec.BottomRight() - scrPos, width, color);
-        DrawLine(sb, rec.BottomRight() + scrPos, rec.BottomLeft() - scrPos, width, color);
-        DrawLine(sb, rec.BottomLeft() + scrPos, rec.TopLeft() - scrPos, width, color);
+        catch (Exception e)
+        {
+            Main.NewText(e);
+        }
     }
     /// <summary>
     /// 简易画线
@@ -189,7 +196,7 @@ public static class RUIHelper
     {
         Texture2D texture = TextureAssets.MagicPixel.Value;
         Vector2 unit = end - start;
-        spriteBatch.Draw(texture, start + (unit / 2) - Main.screenPosition, new Rectangle(0, 0, 1, 1), color, unit.ToRotation() + MathHelper.PiOver2, new Vector2(0.5f, 0.5f), new Vector2(wide, unit.Length()), SpriteEffects.None, 0f);
+        spriteBatch.Draw(texture, start + (unit / 2), new Rectangle(0, 0, 1, 1), color, unit.ToRotation() + MathHelper.PiOver2, new Vector2(0.5f, 0.5f), new Vector2(wide, unit.Length()), SpriteEffects.None, 0f);
     }
     /// <summary>
     /// 获取相对于给定大小的自动缩放修正
