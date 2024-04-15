@@ -633,7 +633,7 @@
         /// </summary>
         /// <param name="element">需要添加的子元素</param>
         /// <returns>成功时返回true，否则返回false</returns>
-        public bool Register(BaseUIElement element)
+        public bool Register(BaseUIElement element, int index = -1)
         {
             if (element == null || ChildrenElements.Contains(element) || element.ParentElement != null)
             {
@@ -644,7 +644,15 @@
             element.OnInitialization();
             element.Calculation();
             element.id = ChildrenElements.Count;
-            ChildrenElements.Add(element);
+            if (index == -1)
+            {
+                ChildrenElements.Add(element);
+            }
+            else
+            {
+                ChildrenElements.Insert(index, element);
+            }
+
             return true;
         }
 

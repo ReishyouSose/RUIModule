@@ -53,7 +53,8 @@
                     DrawRec(sb, hide, 1, Color.White, false);
                     DrawRec(sb, hide.Modified(edgeX, edgeY, -edgeX * 2, -edgeY * 2), 1, Color.Red, false);
                 }
-                else base.DrawChildren(sb);
+                else
+                    base.DrawChildren(sb);
             }
         }
         private InnerPanel _innerPanel;
@@ -125,7 +126,8 @@
                 float maxY = MovableSize.Y;
                 _innerPanel.Info.Top.Pixel = -MathHelper.Lerp(innerPanelMinLocation.Y, maxY, verticalWhellValue);
                 Calculation();
-                if (forceUpdateY) forceUpdateY = false;
+                if (forceUpdateY)
+                    forceUpdateY = false;
             }
             if (Hscroll != null && (horizontalWhellValue != Hscroll.WheelValue || forceUpdateX))
             {
@@ -133,12 +135,13 @@
                 float maxX = MovableSize.X;
                 _innerPanel.Info.Left.Pixel = -MathHelper.Lerp(innerPanelMinLocation.X, maxX, horizontalWhellValue);
                 Calculation();
-                if (forceUpdateX) forceUpdateX = false;
+                if (forceUpdateX)
+                    forceUpdateX = false;
             }
         }
-        public bool AddElement(BaseUIElement element)
+        public bool AddElement(BaseUIElement element, int index = -1)
         {
-            bool flag = _innerPanel.Register(element);
+            bool flag = _innerPanel.Register(element, index);
             if (flag)
             {
                 Calculation();
