@@ -60,6 +60,13 @@
             showArea.RemoveAll();
             showArea.Register(clone(uie));
         }
+        public void ChangeShowElement(int index)
+        {
+            if (expandView.InnerUIE.IndexInRange(index))
+            {
+                ChangeShowElement(expandView.InnerUIE[index] as T);
+            }
+        }
         public void AddElement(T uie)
         {
             uie.Events.OnLeftDown += evt => ChangeShowElement(uie);

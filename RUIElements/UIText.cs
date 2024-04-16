@@ -67,5 +67,10 @@
                 SetSize(TextSize);
             }
         }
+        public void HoverToGold()
+        {
+            Events.OnMouseOver += evt => color = Color.Gold;
+            Events.OnMouseOut += evt => color = Color.White;
+        }
     }
 }
