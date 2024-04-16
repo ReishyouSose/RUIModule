@@ -16,7 +16,7 @@
         /// <param name="text"></param>
         /// <param name="color"></param>
         /// <param name="drawStyle">0是从左上角，1是从中心，2是从左中</param>
-        /// <param name="maxWidth">-2则为使用相对父级的宽度来限制</param>
+        /// <param name="maxWidth"></param>
         public UIText(string text, Color? color = null, Vector2? scale = null, int drawStyle = 0, int maxWidth = -1, DynamicSpriteFont font = null)
         {
             this.text = text;
@@ -25,7 +25,11 @@
             this.drawStyle = drawStyle;
             this.maxWidth = maxWidth;
             this.font = font ?? FontAssets.MouseText.Value;
-            TextSize = ChatManager.GetStringSize(this.font, text, Vector2.One, Math.Min(-1, maxWidth));
+            if (maxWidth > 0)
+            {
+                this.text = this.font.CreateWrappedText(this.text, this.maxWidth);
+            }
+            TextSize = ChatManager.GetStringSize(this.font, text, Vector2.One);
         }
         public override void DrawSelf(SpriteBatch sb)
         {
@@ -56,7 +60,12 @@
         public void SetMaxWidth(int maxWidth)
         {
             this.maxWidth = maxWidth;
-            TextSize = ChatManager.GetStringSize(font, text, Vector2.One, maxWidth);
+            text = text.Replace("\n", "");
+            if (maxWidth > 0)
+            {
+                text = font.CreateWrappedText(text, maxWidth);
+            }
+            TextSize = ChatManager.GetStringSize(font, text, Vector2.One);
         }
         public void ChangeText(string text, bool resetSize = true)
         {
