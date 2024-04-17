@@ -502,7 +502,18 @@
         /// <param name="gt"></param>
         public virtual void Update(GameTime gt)
         {
-            ChildrenElements.RemoveAll(c => c.Info.NeedRemove);
+            List<BaseUIElement> needRemoves = new();
+            foreach (BaseUIElement uie in ChildrenElements)
+            {
+                if (uie.Info.NeedRemove)
+                {
+                    needRemoves.Add(uie);
+                }
+            }
+            foreach (BaseUIElement uie in needRemoves)
+            {
+                Remove(uie);
+            }
             ChildrenElements.ForEach(child =>
             {
                 if (child != null && child.IsVisible)
