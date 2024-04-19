@@ -217,7 +217,7 @@
                 int i = 0;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
-                    uie.SetPos(0, i);
+                    uie.Info.Top.Pixel = i;
                     i += uie.Height + spaceY;
                 }
                 return;
@@ -227,7 +227,7 @@
                 int i = 0;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
-                    uie.SetPos(i, 0);
+                    uie.Info.Left.Pixel = i;
                     i += uie.Width + spaceX;
                 }
                 return;

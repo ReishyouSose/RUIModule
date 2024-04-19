@@ -4,6 +4,7 @@
     {
         public string text;
         public Color color;
+        public Color? overrideColor;
         public Vector2 scale;
         public int drawStyle;
         public float spread = 1.5f;
@@ -51,7 +52,7 @@
                     origin = new Vector2(0, TextSize.Y / 2f);
                     break;
             }
-            ChatManager.DrawColorCodedStringWithShadow(sb, font, text, drawPos, color, 0, origin, scale, maxWidth == -2 ? Width : maxWidth, spread);
+            ChatManager.DrawColorCodedStringWithShadow(sb, font, text, drawPos, overrideColor ?? color, 0, origin, scale, maxWidth == -2 ? Width : maxWidth, spread);
         }
         public override void Calculation()
         {
