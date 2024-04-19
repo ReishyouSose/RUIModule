@@ -36,6 +36,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\Adjust2.png" />
     <EmbeddedResource Include="Assets\Close2.png" />
+    <EmbeddedResource Include="Assets\Decrease.png" />
+    <EmbeddedResource Include="Assets\Increase.png" />
     <EmbeddedResource Include="Assets\Move.png" />
     <EmbeddedResource Include="Assets\Unfold.png" />
     <EmbeddedResource Include="Assets\Fold.png" />
@@ -64,4 +66,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\tModLoader.targets" />
+  <ItemGroup>
+    <AdditionalFiles Remove="Assets\Decrease.png" />
+    <AdditionalFiles Remove="Assets\Increase.png" />
+  </ItemGroup>
 </Project>

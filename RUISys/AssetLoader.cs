@@ -19,8 +19,10 @@ namespace RUIModule.RUISys
         public static ref Texture2D VnlClose => ref baseAssets[11];
         public static ref Texture2D VnlAdjust => ref baseAssets[12];
         public static ref Texture2D Move => ref baseAssets[13];
-        public static ref Texture2D VnlBg => ref baseAssets[14];
-        public static ref Texture2D VnlBd => ref baseAssets[15];
+        public static ref Texture2D Increase => ref baseAssets[14];
+        public static ref Texture2D Decrease => ref baseAssets[15];
+        public static ref Texture2D VnlBg => ref baseAssets[16];
+        public static ref Texture2D VnlBd => ref baseAssets[17];
         public static Dictionary<string, Texture2D> ExtraAssets;
         public static event Action<Dictionary<string, Texture2D>> ExtraLoad;
         public static Effect edgeBlur;
@@ -53,7 +55,9 @@ namespace RUIModule.RUISys
                 "Fold",
                 "Close2",
                 "Adjust2",
-                "Move"
+                "Move",
+                "Increase",
+                "Decrease"
             };
             Texture2D LoadT2D(string fileName)
             {
