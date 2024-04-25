@@ -64,7 +64,7 @@
         {
             if (expandView.InnerUIE.IndexInRange(index))
             {
-                ChangeShowElement(expandView.InnerUIE[index] as T);
+                ChangeShowElement(clone(expandView.InnerUIE[index] as T));
             }
         }
         public void AddElement(T uie)
