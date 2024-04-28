@@ -269,4 +269,13 @@ public static class RUIHelper
     {
         ChatManager.DrawColorCodedStringWithShadow(sb, font, text, pos, color ?? Color.White, 0, origin ?? Vector2.Zero, scale ?? Vector2.One, maxWidth, spread);
     }
+    public static string ItemText(int id, int stack = 1, int prefix = 0)
+    {
+        string text = "[i";
+        if (stack > 1)
+            text += "/s" + stack;
+        if (prefix > 0)
+            text += "/p" + prefix;
+        return text + ":" + id + "]";
+    }
 }
