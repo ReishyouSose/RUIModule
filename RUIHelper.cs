@@ -9,6 +9,7 @@ global using Terraria.ID;
 global using Terraria.ModLoader;
 global using Terraria.UI.Chat;
 global using static RUIModule.RUIHelper;
+using System.Text;
 
 namespace RUIModule;
 
@@ -271,11 +272,20 @@ public static class RUIHelper
     }
     public static string ItemText(int id, int stack = 1, int prefix = 0)
     {
-        string text = "[i";
+        StringBuilder result = new("[i");
         if (stack > 1)
-            text += "/s" + stack;
+        {
+            result.Append("/s");
+            result.Append(stack);
+        }
         if (prefix > 0)
-            text += "/p" + prefix;
-        return text + ":" + id + "]";
+        {
+            result.Append("/p");
+            result.Append(prefix);
+        }
+        result.Append(':');
+        result.Append(id);
+        result.Append(']');
+        return result.ToString();
     }
 }
