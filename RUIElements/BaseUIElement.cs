@@ -155,6 +155,11 @@
             public bool CanBeInteract = true;
 
             /// <summary>
+            /// 是否被某些上层UI禁用交互
+            /// </summary>
+            public bool IsLocked = false;
+
+            /// <summary>
             /// 指示实际坐标与实际大小是否已经经过计算
             /// </summary>
             public bool InitDone = false;
@@ -767,6 +772,8 @@
         public List<BaseUIElement> GetElementsContainsPoint(Point point)
         {
             List<BaseUIElement> elements = new();
+            if (Info.IsLocked)
+                return elements;
             bool contains = ContainsPoint(point);
             if (contains && Info.IsSensitive && Info.CanBeInteract)
             {
@@ -910,7 +917,7 @@
         }
         public void LockInteract(bool allow)
         {
-            Info.CanBeInteract = allow;
+            Info.IsLocked = !allow;
             ChildrenElements.ForEach(x => x.LockInteract(allow));
         }
     }
