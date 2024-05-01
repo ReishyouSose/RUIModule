@@ -5,6 +5,7 @@ public class UIIconSlot : BaseUIElement
     public int slotID;
     public Texture2D icon;
     public Texture2D overrideSlot;
+    public Color? borderColor;
     /// <summary>
     /// 蓝底0，选中9
     /// <br/>红底1，选中18
@@ -31,14 +32,18 @@ public class UIIconSlot : BaseUIElement
     public void DrawSlot(SpriteBatch sb)
     {
         Texture2D slot;
+        Rectangle hitbox = HitBox();
         if (overrideSlot != null)
-        {
             slot = overrideSlot;
-        }
         else
-        {
             slot = AssetLoader.InvSlot[slotID].Value;
-        }
-        sb.Draw(slot, HitBox(), Color.White);
+        sb.Draw(slot, hitbox, Color.White);
+        if (borderColor.HasValue)
+            UIVnlPanel.VanillaDraw(sb, hitbox, AssetLoader.VnlBd, borderColor.Value, 12, 4);
+    }
+    public void BorderHoverToGold()
+    {
+        Events.OnMouseOver += evt => borderColor = Color.Gold;
+        Events.OnMouseOut += evt => borderColor = null;
     }
 }

@@ -1,15 +1,10 @@
 ﻿namespace RUIModule.RUIElements
 {
-    public class UIMove : UIImage
+    public class UIMove : UI3FrameImage
     {
         private bool dragging;
         private Vector2 startPoint;
-        public UIMove(Texture2D tex = null) : base(tex ?? AssetLoader.Move) { }
-        public override void OnInitialization()
-        {
-            base.OnInitialization();
-            SetSize(Tex.Width / 3, Tex.Height);
-        }
+        public UIMove(Texture2D tex = null) : base(tex ?? AssetLoader.Move, x => x is UIMove move && move.dragging) { }
         public override void LoadEvents()
         {
             Events.OnLeftDown += element =>
@@ -36,10 +31,5 @@
                 ParentElement.Calculation();
             }
         }
-        public override void DrawSelf(SpriteBatch sb)
-        {
-            sb.SimpleDraw(Tex, HitBox().TopLeft(), new Rectangle(ChooseFrame() * Width, 0, Width, Height), Vector2.Zero);
-        }
-        private int ChooseFrame() => dragging ? 2 : Info.IsMouseHover ? 1 : 0;
     }
 }

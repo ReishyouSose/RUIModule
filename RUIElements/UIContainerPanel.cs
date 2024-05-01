@@ -61,11 +61,8 @@
         public bool forceUpdateX;
         public bool forceUpdateY;
         /// <summary>
-        /// 0纵1横2全，配合<see cref="spaceX"/>与<see cref="spaceY"/>使用自动间隔
-        /// </summary>
-        public bool[] autoPos;
-        public int spaceX;
-        public int spaceY;
+        /// 0纵1横
+        public int?[] autoPos;
         public List<BaseUIElement> InnerUIE => _innerPanel.ChildrenElements;
 
         public VerticalScrollbar Vscroll { get; private set; }
@@ -93,7 +90,7 @@
                 Register(_innerPanel);
                 _innerPanel.overrideGetCanHitBox = new(_innerPanel.ParentElement.GetCanHitBox);
             }
-            autoPos = new bool[3];
+            autoPos = new int?[2];
         }
         public void SetVerticalScrollbar(VerticalScrollbar scrollbar)
         {
@@ -212,34 +209,39 @@
         }
         private void AutoPosInnerUIE()
         {
-            if (autoPos[0])
+            if (autoPos[0].HasValue && autoPos[1].HasValue)
+            {
+                int x = 0, y = 0;
+                foreach (BaseUIElement uie in InnerUIE)
+                {
+                    int w = uie.Width;
+                    if (x + w > InnerWidth)
+                    {
+                        x = 0;
+                        y += uie.Height + autoPos[0]!.Value;
+                    }
+                    uie.SetPos(x, y);
+                    x += w + autoPos[1]!.Value;
+                }
+                return;
+            }
+            if (autoPos[0].HasValue)
             {
                 int i = 0;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
                     uie.Info.Top.Pixel = i;
-                    i += uie.Height + spaceY;
+                    i += uie.Height + autoPos[0]!.Value;
                 }
                 return;
             }
-            if (autoPos[1])
+            if (autoPos[1].HasValue)
             {
                 int i = 0;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
                     uie.Info.Left.Pixel = i;
-                    i += uie.Width + spaceX;
-                }
-                return;
-            }
-            if (autoPos[2])
-            {
-                int x = 0, y = 0;
-                foreach (BaseUIElement uie in InnerUIE)
-                {
-                    uie.SetPos(x, y);
-                    x += uie.Width + spaceX;
-                    y += uie.Height + spaceY;
+                    i += uie.Width + autoPos[1]!.Value;
                 }
             }
         }

@@ -1,12 +1,11 @@
 ﻿namespace RUIModule.RUIElements
 {
-    public class UIAdjust : UIImage
+    public class UIAdjust : UI3FrameImage
     {
         private bool dragging;
         private Vector2 startPos;
         private float minX, minY, maxX, maxY;
-        public UIAdjust(Texture2D tex, Vector2? size = null, Color? color = null)
-            : base(tex ?? AssetLoader.Adjust, size, color)
+        public UIAdjust(Texture2D? tex = null) : base(tex ?? AssetLoader.Adjust, x => x is UIAdjust adjust && adjust.dragging)
         {
             SetPos(-Width, -Height, 1, 1, false);
         }
@@ -14,7 +13,6 @@
         {
             base.OnInitialization();
             BaseUIElement pe = ParentElement;
-            SetSize(Tex.Width / 3, Tex.Height);
             minX = pe.Width;
             minY = pe.Height;
             maxX = minX * 2;
@@ -65,9 +63,9 @@
         }
         public override void DrawSelf(SpriteBatch sb)
         {
-            sb.SimpleDraw(Tex, HitBox().TopLeft(), new Rectangle(ChooseFrame() * Width, 0, Width, Height), Vector2.Zero);
+            sb.SimpleDraw(Tex, HitBox().TopLeft(), new Rectangle((dragging ? 2 : Info.IsMouseHover ? 1 : 0)
+                * Width, 0, Width, Height), Vector2.Zero);
         }
-        private int ChooseFrame() => dragging ? 2 : Info.IsMouseHover ? 1 : 0;
         private static bool CanMove(float offset, float mouse, float origin) => (offset > 0 && mouse > origin) || (offset < 0 && mouse < origin);
         private static void Clamp(ref float value, float offset, float min, float max)
         {

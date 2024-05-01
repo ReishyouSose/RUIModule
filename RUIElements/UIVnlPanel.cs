@@ -8,22 +8,25 @@ public class UIVnlPanel : UIBottom
     public float opacity = 0.5f;
     public int cornerSize;
     public int barSize;
-    private Texture2D border;
+    public Color borderColor;
     public UIVnlPanel(float x, float y, int cornerSize = 12, int barSize = 4, Color? color = null, float opacity = 0.7f) : base(x, y)
     {
         this.cornerSize = cornerSize;
         this.barSize = barSize;
         this.color = color ?? new Color(63, 82, 151);
         this.opacity = opacity;
+        borderColor = Color.Black;
     }
     public override void DrawSelf(SpriteBatch sb)
     {
         Rectangle rec = HitBox();
-        if (drawBoeder) VanillaDraw(sb, rec, AssetLoader.VnlBd, Color.Black, cornerSize, barSize);
-        if (opacity == 0) return;
+        if (drawBoeder)
+            VanillaDraw(sb, rec, AssetLoader.VnlBd, borderColor, cornerSize, barSize);
+        if (opacity == 0)
+            return;
         VanillaDraw(sb, rec, AssetLoader.VnlBg, color * opacity, cornerSize, barSize);
     }
-    private static void VanillaDraw(SpriteBatch spriteBatch, Rectangle rec, Texture2D texture, Color color, int cornerSize, int barSize)
+    public static void VanillaDraw(SpriteBatch spriteBatch, Rectangle rec, Texture2D texture, Color color, int cornerSize, int barSize)
     {
         Point point = new(rec.X, rec.Y);
         Point point2 = new(point.X + rec.Width - cornerSize, point.Y + rec.Height - cornerSize);
@@ -38,6 +41,11 @@ public class UIVnlPanel : UIBottom
         spriteBatch.Draw(texture, new Rectangle(point.X, point.Y + cornerSize, cornerSize, height), new Rectangle(0, cornerSize, cornerSize, barSize), color);
         spriteBatch.Draw(texture, new Rectangle(point2.X, point.Y + cornerSize, cornerSize, height), new Rectangle(cornerSize + barSize, cornerSize, cornerSize, barSize), color);
         spriteBatch.Draw(texture, new Rectangle(point.X + cornerSize, point.Y + cornerSize, width, height), new Rectangle(cornerSize, cornerSize, barSize, barSize), color);
+    }
+    public void BorderHoverToGold()
+    {
+        Events.OnMouseOver += evt => borderColor = Color.Gold;
+        Events.OnMouseOut += evt => borderColor = Color.Black;
     }
 }
 

@@ -9,6 +9,7 @@
         public readonly Func<T, T> clone;
         public BaseUIElement lockUI;
         public float buttonXoffset;
+        public T ShowUIE => showArea.ChildrenElements[0] as T;
         public bool Expanding { get; private set; }
         public UIDropDownList(BaseUIElement parent, BaseUIElement lockUI, Func<T, T> clone)
         {
@@ -16,6 +17,7 @@
             showArea.Info.HiddenOverflow = true;
             showArea.Info.RightMargin.Pixel = 40;
             showArea.Events.OnLeftDown += evt => Expand();
+            showArea.BorderHoverToGold();
             showArea.ReDraw = sb =>
             {
                 showArea.DrawSelf(sb);
@@ -48,6 +50,8 @@
 
             this.lockUI = lockUI;
             this.clone = clone;
+
+            buttonXoffset = 10;
         }
         public void Expand()
         {
@@ -64,7 +68,7 @@
         {
             if (expandView.InnerUIE.IndexInRange(index))
             {
-                ChangeShowElement(clone(expandView.InnerUIE[index] as T));
+                ChangeShowElement(expandView.InnerUIE[index] as T);
             }
         }
         public void AddElement(T uie)

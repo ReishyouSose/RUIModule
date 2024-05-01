@@ -780,7 +780,7 @@
                 elements.Add(this);
             }
 
-            if (ChildrenElements.Any())
+            if (ChildrenElements.Count != 0)
             {
                 ChildrenElements.ForEach(child =>
                 {

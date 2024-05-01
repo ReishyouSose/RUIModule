@@ -24,6 +24,7 @@ namespace RUIModule.RUIElements
         }
         public Texture2D Tex;
         public Color color;
+        public Color? overrideColor;
         public CalculationStyle Style = CalculationStyle.None;
         /// <summary>
         /// 0是铺满，1是中心
@@ -34,7 +35,8 @@ namespace RUIModule.RUIElements
             Tex = tex;
             this.color = color ?? Color.White;
             size ??= tex?.Size();
-            if (size != null) SetSize(size.Value.X, size.Value.Y);
+            if (size != null)
+                SetSize(size.Value.X, size.Value.Y);
         }
         public UIImage(Texture2D tex, float x, float y, float Xpercent = 0, float Ypercent = 0, Color? color = null)
         {
@@ -47,10 +49,11 @@ namespace RUIModule.RUIElements
 
         public override void DrawSelf(SpriteBatch sb)
         {
-            if (Tex == null) return;
+            if (Tex == null)
+                return;
             if (DrawStyle == 0)
             {
-                sb.Draw(Tex, Info.TotalHitBox, color);
+                sb.Draw(Tex, Info.TotalHitBox, overrideColor ?? color);
             }
             else if (DrawStyle == 1)
             {
@@ -75,7 +78,8 @@ namespace RUIModule.RUIElements
         public void ChangeImage(Texture2D tex, bool reSize = false)
         {
             Tex = tex;
-            if (reSize) SetSize(tex.Size());
+            if (reSize)
+                SetSize(tex.Size());
         }
     }
 }
