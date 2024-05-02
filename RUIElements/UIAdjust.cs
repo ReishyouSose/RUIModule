@@ -5,13 +5,12 @@
         private bool dragging;
         private Vector2 startPos;
         private float minX, minY, maxX, maxY;
-        public UIAdjust(Texture2D? tex = null) : base(tex ?? AssetLoader.Adjust, x => x is UIAdjust adjust && adjust.dragging)
-        {
-            SetPos(-Width, -Height, 1, 1, false);
-        }
+        public UIAdjust(Texture2D? tex = null)
+            : base(tex ?? AssetLoader.VnlAdjust, x => x is UIAdjust adjust && adjust.dragging) { }
         public override void OnInitialization()
         {
             base.OnInitialization();
+            SetPos(-Width, -Height, 1, 1, false);
             BaseUIElement pe = ParentElement;
             minX = pe.Width;
             minY = pe.Height;
