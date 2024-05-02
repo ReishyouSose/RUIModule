@@ -209,29 +209,6 @@
                 TopMargin.Pixel = pixel;
                 ButtomMargin.Pixel = pixel;
             }
-            public void SetMargin(float? left = null, float? top = null, float? right = null, float? buttom = null)
-            {
-                if (left.HasValue)
-                {
-                    LeftMargin.Pixel = left.Value;
-                }
-
-                if (right.HasValue)
-                {
-                    RightMargin.Pixel = right.Value;
-                }
-
-                if (top.HasValue)
-                {
-                    TopMargin.Pixel = top.Value;
-                }
-
-                if (buttom.HasValue)
-                {
-                    ButtomMargin.Pixel = buttom.Value;
-                }
-            }
-
         }
 
         /// <summary>
@@ -898,6 +875,29 @@
             Info.Height.Percent = y;
         }
         public void SetPercent(Vector2 percent) => SetPercent(percent.X, percent.Y);
+        public void SetMargin(float? left = null, float? top = null, float? right = null, float? buttom = null)
+        {
+            if (left.HasValue)
+            {
+                Info.LeftMargin.Pixel = left.Value;
+            }
+
+            if (right.HasValue)
+            {
+                Info.RightMargin.Pixel = right.Value;
+            }
+
+            if (top.HasValue)
+            {
+                Info.TopMargin.Pixel = top.Value;
+            }
+
+            if (buttom.HasValue)
+            {
+                Info.ButtomMargin.Pixel = buttom.Value;
+            }
+            Calculation();
+        }
         public void ResetPos()
         {
             Info.Left = defInfo.Left;
