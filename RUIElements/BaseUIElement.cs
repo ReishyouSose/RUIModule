@@ -209,7 +209,7 @@
                 TopMargin.Pixel = pixel;
                 ButtomMargin.Pixel = pixel;
             }
-            public void SetMargin(float? left = null, float? right = null, float? top = null, float? buttom = null)
+            public void SetMargin(float? left = null, float? top = null, float? right = null, float? buttom = null)
             {
                 if (left.HasValue)
                 {
