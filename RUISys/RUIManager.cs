@@ -9,6 +9,7 @@ public class RUIManager : ModSystem
     public static Dictionary<string, ContainerElement> UIEs => Ins.Elements;
     public static RenderTarget2D render;
     private Vector2 resolution;
+    private bool invOpen;
     public RUIManager()
     {
         Main.QueueMainThreadAction(() =>
@@ -33,6 +34,12 @@ public class RUIManager : ModSystem
             resolution = ScrResolution;
         }
         Ins.Update(gameTime);
+        if (invOpen != Main.playerInventory)
+        {
+            if (!Main.playerInventory)
+                Ins.Close();
+            invOpen = Main.playerInventory;
+        }
     }
     public override void PreSaveAndQuit() => Ins.SaveAndQuit();
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

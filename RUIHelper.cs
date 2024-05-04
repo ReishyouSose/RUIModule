@@ -203,11 +203,11 @@ public static class RUIHelper
     /// 获取相对于给定大小的自动缩放修正
     /// </summary>
     /// <returns>用于乘算的修正值</returns>
-    public static float AutoScale(this Vector2 unit, float size = 52)
+    public static float AutoScale(this Vector2 unit, Vector2? target = null)
     {
-        float ZoomX = unit.X / size;
-        float ZoomY = unit.Y / size;
-        return 1f / Math.Max(MathF.Sqrt((ZoomX * ZoomX) + (ZoomY * ZoomY)), 1);
+        target ??= new(52);
+        Vector2 zoom = unit / target.Value;
+        return 1f / Math.Max(zoom.Length(), 1);
     }
 
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<KeyValuePair<TKey, TValue>, bool> func)
@@ -286,6 +286,19 @@ public static class RUIHelper
         result.Append(':');
         result.Append(id);
         result.Append(']');
+        return result.ToString();
+    }
+    public static string AutoSpace(this string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return "";
+        StringBuilder result = new();
+        foreach (char c in text)
+        {
+            result.Append(c);
+            if (char.IsUpper(c))
+                result.Append(' ');
+        }
         return result.ToString();
     }
 }

@@ -234,7 +234,16 @@ namespace RUIModule.RUISys
             mouseLeftCooldown.Update();
             mouseRightCooldown.Update();
         }
-
+        public void Close()
+        {
+            foreach (ContainerElement ce in Elements.Values)
+            {
+                if (ce.CloseWhenPlayerCloseInv)
+                {
+                    ce.Info.IsVisible = false;
+                }
+            }
+        }
         /// <summary>
         /// 绘制
         /// </summary>

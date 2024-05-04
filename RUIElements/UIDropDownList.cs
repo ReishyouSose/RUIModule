@@ -9,7 +9,15 @@
         public readonly Func<T, T> clone;
         public BaseUIElement lockUI;
         public float buttonXoffset;
-        public T ShowUIE => showArea.ChildrenElements[0] as T;
+        public T? ShowUIE
+        {
+            get
+            {
+                BaseUIElement? value = showArea.ChildrenElements.FirstOrDefault(x => true, null);
+                return value == null ? null : (value as T);
+            }
+        }
+
         public bool Expanding { get; private set; }
         public UIDropDownList(BaseUIElement parent, BaseUIElement lockUI, Func<T, T> clone)
         {

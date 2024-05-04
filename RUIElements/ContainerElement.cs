@@ -4,6 +4,7 @@
     {
         public virtual string Name { get => GetType().FullName; }
         public virtual bool AutoLoad { get => true; }
+        public virtual bool CloseWhenPlayerCloseInv => true;
         public ContainerElement()
         {
             Info.IsVisible = false;
