@@ -59,13 +59,13 @@ namespace RUIModule.RUISys
 
         public RUISystem()
         {
-            Elements = new Dictionary<string, ContainerElement>();
-            CallOrder = new List<string>();
-            interactContainerElementsBuffer = new List<BaseUIElement>();
-            needCallMouseLeftUpElements = new List<BaseUIElement>();
-            needCallMouseRightUpElements = new List<BaseUIElement>();
-            needCallNonMouseLeftUpElements = new List<BaseUIElement>();
-            needCallNonMouseRightUpElements = new List<BaseUIElement>();
+            Elements = [];
+            CallOrder = [];
+            interactContainerElementsBuffer = [];
+            needCallMouseLeftUpElements = [];
+            needCallMouseRightUpElements = [];
+            needCallNonMouseLeftUpElements = [];
+            needCallNonMouseRightUpElements = [];
             mouseLeftCooldown = new KeyCooldown(() =>
             {
                 return Main.mouseLeft;
@@ -106,8 +106,8 @@ namespace RUIModule.RUISys
                 return;
             }
 
-            List<BaseUIElement> interact = new();
-            List<BaseUIElement> allChild = new();
+            List<BaseUIElement> interact = [];
+            List<BaseUIElement> allChild = [];
             ContainerElement child;
             Point mousePos = Main.MouseScreen.ToPoint();
             foreach (string key in CallOrder)
@@ -291,7 +291,8 @@ namespace RUIModule.RUISys
 
             Elements.Add(name, element);
             CallOrder.Add(element.Name);
-            element.OnInitialization();
+            if (!element.SkipInMenu)
+                element.OnInitialization();
             element.PostInitialization();
             element.Calculation();
             return true;

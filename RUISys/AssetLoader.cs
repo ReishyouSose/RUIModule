@@ -25,7 +25,6 @@ namespace RUIModule.RUISys
         public static ref Texture2D VnlBd => ref baseAssets[17];
         public static Dictionary<string, Texture2D> ExtraAssets;
         public static event Action<Dictionary<string, Texture2D>> ExtraLoad;
-        public static Effect edgeBlur;
         /// <summary>
         /// 蓝底0，选中9
         /// <br/>红底1，选中18
@@ -40,8 +39,8 @@ namespace RUIModule.RUISys
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string path = "RUIModule.Assets.";
-            string[] files = new string[]
-            {
+            string[] files =
+            [
                 "BackGround",
                 "Close",
                 "Adjust",
@@ -58,7 +57,7 @@ namespace RUIModule.RUISys
                 "Move",
                 "Increase",
                 "Decrease"
-            };
+            ];
             Texture2D LoadT2D(string fileName)
             {
                 Texture2D texture;
@@ -76,10 +75,10 @@ namespace RUIModule.RUISys
             }
             VnlBg = T2D("Terraria/Images/UI/PanelBackground");
             VnlBd = T2D("Terraria/Images/UI/PanelBorder");
-            ExtraAssets = new();
+            ExtraAssets = [];
             ExtraLoad?.Invoke(ExtraAssets);
-            InvSlot = new Asset<Texture2D>[]
-            {
+            InvSlot =
+            [
                 TextureAssets.InventoryBack,
                 TextureAssets.InventoryBack2,
                 TextureAssets.InventoryBack3,
@@ -99,16 +98,7 @@ namespace RUIModule.RUISys
                 TextureAssets.InventoryBack17,
                 TextureAssets.InventoryBack18,
                 TextureAssets.InventoryBack19,
-            };
-            /*using (Stream? stream = assembly.GetManifestResourceStream(path + "EdgeBlur.xnb"))
-            {
-                if (stream != null)
-                {
-                    using BinaryReader reader = new(stream);
-                    byte[] effData = reader.ReadBytes((int)stream.Length);
-                    EdgeBlur = new(Main.graphics.GraphicsDevice, effData);
-                }
-            }*/
+            ];
         }
     }
 }

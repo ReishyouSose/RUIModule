@@ -212,7 +212,7 @@ public static class RUIHelper
 
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<KeyValuePair<TKey, TValue>, bool> func)
     {
-        List<TKey> keys = new();
+        List<TKey> keys = [];
         foreach (KeyValuePair<TKey, TValue> pair in dic)
         {
             if (func(pair))
@@ -227,7 +227,7 @@ public static class RUIHelper
     }
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<TKey, bool> func)
     {
-        List<TKey> keys = new();
+        List<TKey> keys = [];
         foreach (TKey key in dic.Keys)
         {
             if (func(key))
@@ -242,7 +242,7 @@ public static class RUIHelper
     }
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<TValue, bool> func)
     {
-        List<TKey> keys = new();
+        List<TKey> keys = [];
         foreach (KeyValuePair<TKey, TValue> pair in dic)
         {
             if (func(pair.Value))

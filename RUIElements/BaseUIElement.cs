@@ -430,7 +430,7 @@
         {
             events = new ElementEvents();
             Info = new ElementInfo();
-            ChildrenElements = new List<BaseUIElement>();
+            ChildrenElements = [];
         }
         /// <summary>
         /// 可用于阻止元素自身的事件注册
@@ -484,7 +484,7 @@
         /// <param name="gt"></param>
         public virtual void Update(GameTime gt)
         {
-            List<BaseUIElement> needRemoves = new();
+            List<BaseUIElement> needRemoves = [];
             foreach (BaseUIElement uie in ChildrenElements)
             {
                 if (uie.Info.NeedRemove)
@@ -748,7 +748,7 @@
         /// <returns>包含点上的UI部件及敏感部件的集合</returns>
         public List<BaseUIElement> GetElementsContainsPoint(Point point)
         {
-            List<BaseUIElement> elements = new();
+            List<BaseUIElement> elements = [];
             if (Info.IsLocked)
                 return elements;
             bool contains = ContainsPoint(point);
@@ -780,8 +780,7 @@
         /// <returns></returns>
         public List<BaseUIElement> GetAllChilds()
         {
-            List<BaseUIElement> elements = new();
-            elements.AddRange(ChildrenElements);
+            List<BaseUIElement> elements = [.. ChildrenElements];
             foreach (BaseUIElement child in ChildrenElements)
             {
                 elements.AddRange(child.GetAllChilds());

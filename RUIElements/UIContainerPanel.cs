@@ -14,48 +14,6 @@
                 Info.Width.Percent = 1f;
                 Info.Height.Percent = 1f;
             }
-            public override void DrawChildren(SpriteBatch sb)
-            {
-                base.DrawChildren(sb);
-                return;
-                if (edgeBlur > 0)
-                {
-                    var gd = Main.graphics.GraphicsDevice;
-                    var old = gd.PresentationParameters.RenderTargetUsage;
-                    gd.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
-
-                    gd.SetRenderTarget(RUIManager.render);
-                    gd.Clear(Color.Transparent);
-
-                    base.DrawChildren(sb);
-
-
-
-                    sb.End();
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    gd.SetRenderTarget(null);
-                    Effect eff = AssetLoader.edgeBlur;
-                    eff.Parameters["type"].SetValue(edgeBlur - 1);
-                    eff.Parameters["resolution"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                    Rectangle hide = ParentElement.HitBox(false);
-                    Vector4 rect = new(hide.Left, hide.Top, hide.Right, hide.Bottom);
-                    eff.Parameters["outer"].SetValue(rect);
-                    eff.Parameters["inner"].SetValue(rect + new Vector4(edgeX, edgeY, -edgeX, -edgeY));
-                    eff.CurrentTechnique.Passes[0].Apply();
-                    sb.Draw(RUIManager.render, Vector2.Zero, Color.White);
-
-                    gd.PresentationParameters.RenderTargetUsage = old;
-                    sb.End();
-                    //启用画笔，传参：延迟绘制（纹理合批优化），alpha颜色混合模式，各向异性采样，不启用深度模式，UI大小矩阵
-                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-                        DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-
-                    DrawRec(sb, hide, 1, Color.White, false);
-                    DrawRec(sb, hide.Modified(edgeX, edgeY, -edgeX * 2, -edgeY * 2), 1, Color.Red, false);
-                }
-                else
-                    base.DrawChildren(sb);
-            }
         }
         private InnerPanel _innerPanel;
         public bool forceUpdateX;

@@ -3,7 +3,8 @@
     public abstract class ContainerElement : BaseUIElement
     {
         public virtual string Name { get => GetType().FullName; }
-        public virtual bool AutoLoad { get => true; }
+        public virtual bool AutoLoad => true;
+        public virtual bool SkipInMenu => false;
         public virtual bool CloseWhenPlayerCloseInv => true;
         public ContainerElement()
         {

@@ -7,27 +7,22 @@ public class RUIManager : ModSystem
     public static Mod mod;
     public static RUISystem Ins { get; private set; }
     public static Dictionary<string, ContainerElement> UIEs => Ins.Elements;
-    public static RenderTarget2D render;
     private Vector2 resolution;
     private bool invOpen;
     public RUIManager()
     {
         Main.QueueMainThreadAction(() =>
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
             AssetLoader.Load();
             Ins = new RUISystem();
             Ins.Load(Mod);
-            Main.OnResolutionChanged += v2 =>
-            {
-                Ins.OnResolutionChange();
-                render = new(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
-            };
-            render = new(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
         });
+        //Main.OnResolutionChanged += v2 => Ins.OnResolutionChange();
     }
     public override void UpdateUI(GameTime gameTime)
     {
-        //Main.NewText("up");
         if (resolution != ScrResolution)
         {
             Ins.OnResolutionChange();

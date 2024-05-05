@@ -20,7 +20,6 @@
     <None Remove="Assets\BackGround.png" />
     <None Remove="Assets\Close.png" />
     <None Remove="Assets\Close2.png" />
-    <None Remove="Assets\EdgeBlur.xnb" />
     <None Remove="Assets\Fold.png" />
     <None Remove="Assets\HScrollBD.png" />
     <None Remove="Assets\HScrollInner.png" />
@@ -52,7 +51,6 @@
     <EmbeddedResource Include="Assets\Close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\EdgeBlur.xnb" />
     <EmbeddedResource Include="Assets\HScrollBD.png" />
     <EmbeddedResource Include="Assets\HScrollInner.png" />
     <EmbeddedResource Include="Assets\Slot.png" />
