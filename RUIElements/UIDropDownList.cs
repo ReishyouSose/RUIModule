@@ -17,6 +17,14 @@
                 return value == null ? null : (value as T);
             }
         }
+        public T? FirstUIE
+        {
+            get
+            {
+                BaseUIElement? value = expandView.InnerUIE.FirstOrDefault(x => true, null);
+                return value == null ? null : (value as T);
+            }
+        }
 
         public bool Expanding { get; private set; }
         public UIDropDownList(BaseUIElement parent, BaseUIElement lockUI, Func<T, T> clone)

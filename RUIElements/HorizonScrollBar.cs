@@ -35,7 +35,8 @@ namespace RUIModule.RUIElements
             inner = AssetLoader.HScrollInner;
             WheelPixel = wheelPixel;
             this.drawBorder = drawBorder;
-            if (drawBorder) alpha = 1;
+            if (drawBorder)
+                alpha = 1;
             SetScissor(6);
             Info.Height.Set(20f, 0f);
             Info.Top.Set(-(drawBorder ? 30 : 25), 1f);
@@ -120,7 +121,7 @@ namespace RUIModule.RUIElements
                     alpha -= 0.04f;
                 }
             }
-            if (View.Info.CanBeInteract)
+            if (!View.Info.IsLocked)
             {
                 MouseState state = Mouse.GetState();
                 if (!isMouseHover)
@@ -158,13 +159,16 @@ namespace RUIModule.RUIElements
                     wait = Math.Clamp(wait - offsetX, 0f, 1f);
                     previousMouseX = Main.mouseX;
                 }
-                else isDragging = false;
+                else
+                    isDragging = false;
             }
 
             if (oldMovableX != ViewMovableX)
             {
-                if (oldMovableX == 0 || ViewMovableX == 0) real = 0;
-                else real /= ViewMovableX / oldMovableX;
+                if (oldMovableX == 0 || ViewMovableX == 0)
+                    real = 0;
+                else
+                    real /= ViewMovableX / oldMovableX;
                 real = Math.Clamp(real, 0f, 1f);
                 wait = real;
                 oldMovableX = ViewMovableX;
@@ -192,8 +196,10 @@ namespace RUIModule.RUIElements
                 Calculation();
             }
             InnerRec.Width = Math.Min(InnerRec.Width, Width - scissor);
-            if (drawBorder) DrawBar(sb, border, HitBox(), Color.White);
-            if (ViewMovableX > 0 || drawBorder) DrawBar(sb, inner, InnerRec, Color.White * alpha);
+            if (drawBorder)
+                DrawBar(sb, border, HitBox(), Color.White);
+            if (ViewMovableX > 0 || drawBorder)
+                DrawBar(sb, inner, InnerRec, Color.White * alpha);
         }
         private void DrawBar(SpriteBatch spriteBatch, Texture2D tex, Rectangle rec, Color color)
         {
@@ -204,14 +210,17 @@ namespace RUIModule.RUIElements
         public void ReSet() => real = wait = 0;
         public void ForceSetPixel(float pixel)
         {
-            if (ViewMovableX == 0) return;
+            if (ViewMovableX == 0)
+                return;
             real = wait = pixel / ViewMovableX;
             Calculation();
         }
         public void MoveView(int pixel, int limit = 0)
         {
-            if (ViewMovableX == 0) return;
-            if (limit > 0) pixel = Math.Clamp(pixel, -limit, limit);
+            if (ViewMovableX == 0)
+                return;
+            if (limit > 0)
+                pixel = Math.Clamp(pixel, -limit, limit);
             MoveView(pixel / ViewMovableX);
         }
         public void MoveView(float percent)
