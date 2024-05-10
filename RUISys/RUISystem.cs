@@ -238,9 +238,10 @@ namespace RUIModule.RUISys
         {
             foreach (ContainerElement ce in Elements.Values)
             {
-                if (ce.CloseWhenPlayerCloseInv)
+                if (ce.CloseWhenPlayerCloseInv && ce.IsVisible)
                 {
                     ce.Info.IsVisible = false;
+                    ce.OnCloseByInv();
                 }
             }
         }

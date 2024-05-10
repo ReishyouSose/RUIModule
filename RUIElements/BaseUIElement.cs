@@ -401,8 +401,9 @@
                     bottomRight = Vector2.Transform(Info.Location + Info.Size, Main.UIScaleMatrix);
 
                 return new((int)location.X, (int)location.Y,
-                    (int)Math.Max(bottomRight.X - location.X, 0),
-                    (int)Math.Max(bottomRight.Y - location.Y, 0));
+                    (int)Math.Ceiling(Math.Max(bottomRight.X - location.X, 0)),
+                    (int)Math.Ceiling(Math.Max(bottomRight.Y - location.Y, 0))
+);
             }
         }
 
@@ -484,18 +485,6 @@
         /// <param name="gt"></param>
         public virtual void Update(GameTime gt)
         {
-            List<BaseUIElement> needRemoves = [];
-            foreach (BaseUIElement uie in ChildrenElements)
-            {
-                if (uie.Info.NeedRemove)
-                {
-                    needRemoves.Add(uie);
-                }
-            }
-            foreach (BaseUIElement uie in needRemoves)
-            {
-                Remove(uie);
-            }
             ChildrenElements.ForEach(child =>
             {
                 if (child != null && child.IsVisible)

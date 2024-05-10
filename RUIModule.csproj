@@ -15,6 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RUIModule\**" />
+    <EmbeddedResource Remove="RUIModule\**" />
+    <None Remove="RUIModule\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Adjust.png" />
     <None Remove="Assets\Adjust2.png" />
     <None Remove="Assets\BackGround.png" />
@@ -63,6 +69,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\tModLoader.targets" />
+  <ItemGroup>
+    <AdditionalFiles Remove="RUIModule\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Remove="Assets\Decrease.png" />
     <AdditionalFiles Remove="Assets\Increase.png" />

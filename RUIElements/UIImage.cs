@@ -26,8 +26,9 @@ namespace RUIModule.RUIElements
         public Color color;
         public Color? overrideColor;
         public CalculationStyle Style = CalculationStyle.None;
+        public Rectangle? scissors;
         /// <summary>
-        /// 0是铺满，1是中心
+        /// 0是铺满，1是中心，2是左上角
         /// </summary>
         public int DrawStyle { get; set; }
         public UIImage(Texture2D tex, Vector2? size = null, Color? color = null)
@@ -51,16 +52,22 @@ namespace RUIModule.RUIElements
         {
             if (Tex == null)
                 return;
-            if (DrawStyle == 0)
+            Rectangle hitbox = HitBox();
+            switch (DrawStyle)
             {
-                sb.Draw(Tex, Info.TotalHitBox, overrideColor ?? color);
-            }
-            else if (DrawStyle == 1)
-            {
-                sb.SimpleDraw(Tex, Center(), null, Tex.Size() / 2f);
+                case 0:
+                    sb.Draw(Tex, hitbox, scissors, overrideColor ?? color);
+                    break;
+                case 1:
+                    sb.SimpleDraw(Tex, Center(), scissors, Tex.Size() / 2f);
+                    break;
+                case 2:
+                    sb.Draw(Tex, hitbox.TopLeft(), scissors, overrideColor ?? color);
+                    break;
+                default:
+                    break;
             }
         }
-        public void ChangeColor(Color color) => this.color = color;
         public override void Calculation()
         {
             float aspectRatio = Tex == null ? 1 : (float)Tex.Width / Tex.Height;

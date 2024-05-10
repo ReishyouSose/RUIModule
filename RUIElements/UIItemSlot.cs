@@ -69,7 +69,7 @@ namespace RUIModule.RUIElements
             Slot = new(null, 0);
             Register(Slot);
             Opacity = 1f;
-            this.item = item ?? new Item();
+            this.item = item?.Clone() ?? new Item();
             if (item != null)
             {
                 Main.instance.LoadItem(item.type);

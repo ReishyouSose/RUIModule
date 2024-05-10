@@ -18,5 +18,6 @@
             Info.CanBeInteract = false;
             Info.IsVisible = false;
         }
+        public virtual void OnCloseByInv() { }
     }
 }

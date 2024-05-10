@@ -74,6 +74,22 @@
         }
         public override void Update(GameTime gt)
         {
+            List<BaseUIElement> needRemoves = [];
+            foreach (BaseUIElement uie in InnerUIE)
+            {
+                if (uie.Info.NeedRemove)
+                {
+                    needRemoves.Add(uie);
+                }
+            }
+            if (needRemoves.Count > 0)
+            {
+                foreach (BaseUIElement uie in needRemoves)
+                {
+                    RemoveElement(uie);
+                }
+                Calculation();
+            }
             base.Update(gt);
             if (Vscroll != null && (verticalWhellValue != Vscroll.WheelValue || forceUpdateY))
             {
