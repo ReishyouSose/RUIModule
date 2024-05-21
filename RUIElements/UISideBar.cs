@@ -12,12 +12,11 @@
         private float? baseX = null, baseY = null, baseL = null, baseT = null;
         public UIImage button;
         /// <param name="dir">0123顺转四向</param>
-        public UISideBar(float x, float y, int dir = 0) : base()
+        public UISideBar(float x, float y, int dir = 0) : base(x, y)
         {
             canDrag = false;
             baseX ??= x;
             baseY ??= y;
-            SetSize(x, y);
             button = new(AssetLoader.Side, 20, 42);
             this.dir = dir;
             switch (dir)
@@ -174,18 +173,10 @@
 
             switch (dir)
             {
-                case 0:
-                    drawrec.X = rec.X;
-                    break;
-                case 1:
-                    drawrec.Y = rec.Y;
-                    break;
-                case 2:
-                    drawrec.Width = rec.Left - drawrec.Left + rec.Width;
-                    break;
-                case 3:
-                    drawrec.Height = rec.Top - drawrec.Top + rec.Height;
-                    break;
+                case 0: drawrec.X = rec.X; break;
+                case 1: drawrec.Y = rec.Y; break;
+                case 2: drawrec.Width = rec.Left - drawrec.Left + rec.Width; break;
+                case 3: drawrec.Height = rec.Top - drawrec.Top + rec.Height; break;
             }
             //修改GD剪切矩形为原剪切矩形与现剪切矩形的交集
             gd.ScissorRectangle = Rectangle.Intersect(gd.ScissorRectangle, drawrec);
