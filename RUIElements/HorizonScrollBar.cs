@@ -40,8 +40,8 @@ namespace RUIModule.RUIElements
             SetScissor(6);
             Info.Height.Set(20f, 0f);
             Info.Top.Set(-(drawBorder ? 30 : 25), 1f);
-            Info.Width.Set(-scissor * 2, 1f);
-            Info.Left.Set(scissor, 0f);
+            Info.Width.Set(-scissor * 2 + 20, 1f);
+            Info.Left.Set(scissor + 10, 0f);
             Info.LeftMargin.Pixel = scissor / 2f;
             Info.RightMargin.Pixel = scissor / 2f;
             Info.IsSensitive = true;

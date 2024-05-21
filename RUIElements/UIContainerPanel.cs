@@ -4,23 +4,23 @@
     {
         private class InnerPanel : BaseUIElement
         {
-            public int edgeBlur;
-            public int edgeX;
-            public int edgeY;
-            public override Rectangle HiddenOverflowRectangle => ParentElement.HiddenOverflowRectangle;
-            //public override Rectangle GetCanHitBox() => Rectangle.Intersect(ParentElement.GetCanHitBox(), ParentElement.Info.TotalHitBox);
             public InnerPanel()
             {
                 Info.Width.Percent = 1f;
                 Info.Height.Percent = 1f;
             }
+            public override Rectangle HiddenOverflowRectangle => ParentElement.HiddenOverflowRectangle;
         }
         private InnerPanel _innerPanel;
         public bool forceUpdateX;
         public bool forceUpdateY;
-        /// <summary>
-        /// 0纵1横
+
+        /// <summary>0纵1横</summary>
         public int?[] autoPos;
+
+        /// <summary>0纵1横</summary>
+        private int[] edgeBlur;
+        public Action<List<BaseUIElement>> autoPosRule;
         public List<BaseUIElement> InnerUIE => _innerPanel.ChildrenElements;
 
         public VerticalScrollbar Vscroll { get; private set; }
@@ -33,8 +33,14 @@
         {
             get
             {
-                float maxX = Math.Max(innerPanelMinLocation.X, innerPanelMaxLocation.X - _innerPanel.Info.TotalSize.X);
-                float maxY = Math.Max(innerPanelMinLocation.Y, innerPanelMaxLocation.Y - _innerPanel.Info.TotalSize.Y);
+                int edgeX = 0, edgeY = 0;
+                if (edgeBlur != null)
+                {
+                    edgeX = edgeBlur[1];
+                    edgeY = edgeBlur[0];
+                }
+                float maxX = Math.Max(innerPanelMinLocation.X, innerPanelMaxLocation.X + edgeX - _innerPanel.Info.TotalSize.X);
+                float maxY = Math.Max(innerPanelMinLocation.Y, innerPanelMaxLocation.Y + edgeY - _innerPanel.Info.TotalSize.Y);
                 return new((int)Math.Round(maxX), (int)Math.Round(maxY));
             }
         }
@@ -141,7 +147,7 @@
             innerPanelMinLocation = Vector2.Zero;
             innerPanelMaxLocation = Vector2.Zero;
             Vector2 v = Vector2.Zero;
-            _innerPanel.ForEach(element =>
+            _innerPanel.ChildrenElements.ForEach(element =>
             {
                 if (element.IsVisible)
                 {
@@ -156,7 +162,6 @@
                     {
                         innerPanelMinLocation.Y = v.Y;
                     }
-
                     v.X = element.Info.TotalLocation.X + element.Info.TotalSize.X - _innerPanel.Info.Location.X;
                     v.Y = element.Info.TotalLocation.Y + element.Info.TotalSize.Y - _innerPanel.Info.Location.Y;
 
@@ -181,17 +186,69 @@
             Hscroll?.Calculation();
             Vscroll?.Calculation();
         }
+        public override void DrawChildren(SpriteBatch sb)
+        {
+            if (edgeBlur == null)
+            {
+                base.DrawChildren(sb);
+            }
+            else
+            {
+                var gd = Main.graphics.GraphicsDevice;
+                Rectangle oldScissor = gd.ScissorRectangle;
+
+                UISpbState(sb, true, true);
+                var originalRT2Ds = gd.GetRenderTargets();
+
+                var lastRTUsage = gd.PresentationParameters.RenderTargetUsage;
+                gd.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+
+                gd.SetRenderTarget(RUISystem.Render);
+                gd.Clear(Color.Transparent);
+
+                base.DrawChildren(sb);
+
+                UISpbState(sb, true, true, true);
+
+                gd.SetRenderTargets(originalRT2Ds);
+                gd.ScissorRectangle = oldScissor.Modified(-10, -10, 20, 20);
+
+                Effect eff = AssetLoader.EdgeBlur;
+                eff.Parameters["resolution"].SetValue(ScrResolution);
+                Rectangle hitbox = HitBox(false);
+                int x = edgeBlur[1], y = edgeBlur[0];
+                eff.Parameters["outer"].SetValue(hitbox.ScaleRec(Main.UIScaleMatrix).ToCoords());
+                eff.Parameters["inner"].SetValue(hitbox.Modified(x, y, -2 * x, -2 * y).ScaleRec(Main.UIScaleMatrix).ToCoords());
+                eff.CurrentTechnique.Passes[0].Apply();
+                sb.Draw(RUISystem.Render, Vector2.Zero, Color.White);
+
+                UISpbState(sb, false);
+                gd.PresentationParameters.RenderTargetUsage = lastRTUsage;
+                gd.ScissorRectangle = oldScissor;
+            }
+        }
         private void AutoPosInnerUIE()
         {
+            if (autoPosRule != null)
+            {
+                autoPosRule.Invoke(InnerUIE);
+                return;
+            }
+            int edgeX = 0, edgeY = 0;
+            if (edgeBlur != null)
+            {
+                edgeX = edgeBlur[1];
+                edgeY = edgeBlur[0];
+            }
             if (autoPos[0].HasValue && autoPos[1].HasValue)
             {
-                int x = 0, y = 0;
+                int x = edgeX, y = edgeY;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
                     int w = uie.Width;
-                    if (x + w > InnerWidth)
+                    if (x + w > InnerWidth - 2 * edgeX)
                     {
-                        x = 0;
+                        x = edgeX;
                         y += uie.Height + autoPos[0]!.Value;
                     }
                     uie.SetPos(x, y);
@@ -201,7 +258,7 @@
             }
             if (autoPos[0].HasValue)
             {
-                int i = 0;
+                int i = edgeY;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
                     uie.Info.Top.Pixel = i;
@@ -211,7 +268,7 @@
             }
             if (autoPos[1].HasValue)
             {
-                int i = 0;
+                int i = edgeX;
                 foreach (BaseUIElement uie in InnerUIE)
                 {
                     uie.Info.Left.Pixel = i;
@@ -219,11 +276,10 @@
                 }
             }
         }
-        public void SetEdgeBlur(int type, int x, int y)
-        {
-            _innerPanel.edgeBlur = type + 1;
-            _innerPanel.edgeX = x;
-            _innerPanel.edgeY = y;
-        }
+        public void VerticalEdge(int y = 10) => edgeBlur = [y, 0];
+        public void HorizonEdge(int x = 10) => edgeBlur = [0, x];
+        public void SetEdgeBlur(int x = 10, int y = 10) => edgeBlur = [x, y];
+        public int[] GetEdgeBlur() => edgeBlur;
+
     }
 }
