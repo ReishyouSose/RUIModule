@@ -1,15 +1,13 @@
 ﻿namespace RUIModule.RUIElements
 {
+    /// <summary>
+    /// 完全透明的UI框
+    /// </summary>
     public class UIBottom : BaseUIElement
     {
         public bool canDrag;
         private bool dragging;
-        private Vector2 startPoint;
-        public UIBottom(float x, float y, float xp = 0, float yp = 0)
-        {
-            startPoint = Vector2.Zero;
-            SetSize(x, y, xp, yp);
-        }
+        private Vector2 startPoint = Vector2.Zero;
         public override void LoadEvents()
         {
             base.LoadEvents();

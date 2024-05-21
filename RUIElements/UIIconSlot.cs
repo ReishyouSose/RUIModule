@@ -50,7 +50,7 @@ public class UIIconSlot : BaseUIElement
             slot = AssetLoader.InvSlot[slotID].Value;
         sb.Draw(slot, hitbox, Color.White);
         if (borderColor.HasValue)
-            UIVnlPanel.VanillaDraw(sb, hitbox, AssetLoader.VnlBd, borderColor.Value, 12, 4);
+            UICornerPanel.VanillaDraw(sb, hitbox, AssetLoader.VnlBd, borderColor.Value, 12, 4);
     }
     public void BorderHoverToGold()
     {

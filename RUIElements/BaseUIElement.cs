@@ -502,20 +502,9 @@
         /// <param name="sb">画笔</param>
         public virtual void Draw(SpriteBatch sb)
         {
-            //声明光栅化状态，剔除状态为不剔除，开启剪切测试
-            RasterizerState overflowHiddenRasterizerState = new()
-            {
-                CullMode = CullMode.None,
-                ScissorTestEnable = true
-            };
             //如果激活
             if (IsVisible)
             {
-                //关闭画笔
-                sb.End();
-                //启用画笔，传参：延迟绘制（纹理合批优化），alpha颜色混合模式，各向异性采样，不启用深度模式，UI大小矩阵
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
                 //绘制自己，如果不隐藏UI部件
                 if (!Info.IsHidden)
                 {
@@ -527,70 +516,38 @@
                         Main.hoverItemName = hoverText;
                 }
             }
-            //设定gd是画笔绑定的图像设备
-            GraphicsDevice gd = sb.GraphicsDevice;
-            //储存绘制原剪切矩形
-            Rectangle scissorRectangle = gd.ScissorRectangle;
-            //如果启用溢出隐藏
-            if (Info.HiddenOverflow)
-            {
-                //关闭画笔以便修改绘制参数
-                sb.End();
-                //修改光栅化状态
-                sb.GraphicsDevice.RasterizerState = overflowHiddenRasterizerState;
-                //修改GD剪切矩形为原剪切矩形与现剪切矩形的交集
-                gd.ScissorRectangle = Rectangle.Intersect(gd.ScissorRectangle, HiddenOverflowRectangle);
-                //启用画笔，传参：延迟绘制（纹理合批优化），alpha颜色混合模式，各向异性采样，不启用深度模式，UI大小矩阵
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
-            }
-            //绘制子元素
-            DrawChildren(sb);
-
-            //如果启用溢出隐藏
-            if (Info.HiddenOverflow)
-            {
-                //关闭画笔
-                sb.End();
-                //修改光栅化状态
-                gd.RasterizerState = overflowHiddenRasterizerState;
-                //将剪切矩形换回原剪切矩形
-                gd.ScissorRectangle = scissorRectangle;
-                //启用画笔
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
-            }
             if (DrawRec[0].HasValue)
             {
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null);
-                DrawRec(sb, HitBox().ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[0].Value, false);
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
+                DrawRec(sb, HitBox(), 2f, DrawRec[0].Value, false);
             }
 
             if (DrawRec[1].HasValue)
             {
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null);
-                DrawRec(sb, HitBox(false).ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[1].Value, false);
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
+                DrawRec(sb, HitBox(false), 2f, DrawRec[1].Value, false);
             }
             if (DrawRec[2].HasValue)
             {
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null);
-                DrawRec(sb, GetCanHitBox().ScaleRec(Main.UIScaleMatrix), 2f, DrawRec[2].Value, false);
-                sb.End();
-                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-                    DepthStencilState.None, overflowHiddenRasterizerState, null, Main.UIScaleMatrix);
+                DrawRec(sb, GetCanHitBox(), 2f, DrawRec[2].Value, false);
             }
+            //如果启用溢出隐藏
+            if (Info.HiddenOverflow)
+            {
+                //设定gd是画笔绑定的图像设备
+                GraphicsDevice gd = sb.GraphicsDevice;
+                //储存绘制原剪切矩形
+                Rectangle scissorRectangle = gd.ScissorRectangle;
+                gd.ScissorRectangle = Rectangle.Intersect(gd.ScissorRectangle, HiddenOverflowRectangle);
+                UISpbState(sb, true);
+
+                //绘制子元素
+                DrawChildren(sb);
+
+                //将剪切矩形换回原剪切矩形
+                gd.ScissorRectangle = scissorRectangle;
+                UISpbState(sb, false);
+            }
+            else
+                DrawChildren(sb);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 {
     public class UIDropDownList<T> : BaseUIElement where T : BaseUIElement
     {
-        public readonly UIVnlPanel showArea, expandArea;
+        public readonly UICornerPanel showArea, expandArea;
         public readonly UIContainerPanel expandView;
         private readonly VerticalScrollbar scroll;
         public readonly UIImage expandButton;

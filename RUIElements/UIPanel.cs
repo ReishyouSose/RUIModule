@@ -5,7 +5,7 @@
         public Texture2D Tex;
         public Color color;
         public float opacity = 0.5f;
-        public UIPanel(float x, float y, Color? color = null, float opacity = 0.5f) : base(x, y)
+        public UIPanel(Color? color = null, float opacity = 0.5f) : base()
         {
             Tex = AssetLoader.BackGround;
             canDrag = false;
