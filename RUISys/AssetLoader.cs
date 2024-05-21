@@ -23,8 +23,8 @@ namespace RUIModule.RUISys
         public static ref Texture2D Decrease => ref baseAssets[15];
         public static ref Texture2D VnlBg => ref baseAssets[16];
         public static ref Texture2D VnlBd => ref baseAssets[17];
-        public static Effect EdgeBlur { get; private set; }
-
+        public static Dictionary<string, Texture2D> ExtraAssets;
+        public static event Action<Dictionary<string, Texture2D>> ExtraLoad;
         /// <summary>
         /// 蓝底0，选中9
         /// <br/>红底1，选中18
@@ -37,7 +37,8 @@ namespace RUIModule.RUISys
         public static Asset<Texture2D>[] InvSlot;
         public static void Load()
         {
-            string path = "RUIModule/Assets/";
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            string path = "RUIModule.Assets.";
             string[] files =
             [
                 "BackGround",
@@ -57,14 +58,25 @@ namespace RUIModule.RUISys
                 "Increase",
                 "Decrease"
             ];
+            Texture2D LoadT2D(string fileName)
+            {
+                Texture2D texture;
+                using (Stream? stream = assembly.GetManifestResourceStream(path + fileName + ".png"))
+                {
+                    texture = Texture2D.FromStream(Main.graphics.GraphicsDevice, stream);
+                }
+                return texture;
+            }
             int count = files.Length;
             baseAssets = new Texture2D[count + 2];
             for (int i = 0; i < count; i++)
             {
-                baseAssets[i] = T2D(path + files[i]);
+                baseAssets[i] = LoadT2D(files[i]);
             }
             VnlBg = T2D("Terraria/Images/UI/PanelBackground");
             VnlBd = T2D("Terraria/Images/UI/PanelBorder");
+            ExtraAssets = [];
+            ExtraLoad?.Invoke(ExtraAssets);
             InvSlot =
             [
                 TextureAssets.InventoryBack,
@@ -87,7 +99,6 @@ namespace RUIModule.RUISys
                 TextureAssets.InventoryBack18,
                 TextureAssets.InventoryBack19,
             ];
-            EdgeBlur = ModContent.Request<Effect>(path + "EdgeBlur", AssetRequestMode.ImmediateLoad).Value;
         }
     }
 }

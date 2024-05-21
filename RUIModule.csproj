@@ -1,27 +1,79 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RUIModule\**" />
+    <EmbeddedResource Remove="RUIModule\**" />
+    <None Remove="RUIModule\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="Assets\Adjust.png" />
     <None Remove="Assets\Adjust2.png" />
     <None Remove="Assets\BackGround.png" />
     <None Remove="Assets\Close.png" />
     <None Remove="Assets\Close2.png" />
-    <None Remove="Assets\Decrease.png" />
-    <None Remove="Assets\EdgeBlur.fx" />
     <None Remove="Assets\Fold.png" />
     <None Remove="Assets\HScrollBD.png" />
     <None Remove="Assets\HScrollInner.png" />
-    <None Remove="Assets\Increase.png" />
     <None Remove="Assets\Move.png" />
     <None Remove="Assets\Side.png" />
     <None Remove="Assets\Slot.png" />
     <None Remove="Assets\Unfold.png" />
     <None Remove="Assets\VScrollBD.png" />
     <None Remove="Assets\VScrollInner.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Adjust2.png" />
+    <EmbeddedResource Include="Assets\Close2.png" />
+    <EmbeddedResource Include="Assets\Decrease.png" />
+    <EmbeddedResource Include="Assets\Increase.png" />
+    <EmbeddedResource Include="Assets\Move.png" />
+    <EmbeddedResource Include="Assets\Unfold.png" />
+    <EmbeddedResource Include="Assets\Fold.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Adjust.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\BackGround.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\HScrollBD.png" />
+    <EmbeddedResource Include="Assets\HScrollInner.png" />
+    <EmbeddedResource Include="Assets\Slot.png" />
+    <EmbeddedResource Include="Assets\VScrollBD.png" />
+    <EmbeddedResource Include="Assets\VScrollInner.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Side.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="..\tModLoader.targets" />
+  <ItemGroup>
+    <AdditionalFiles Remove="RUIModule\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Remove="Assets\Decrease.png" />
+    <AdditionalFiles Remove="Assets\Increase.png" />
   </ItemGroup>
 </Project>
