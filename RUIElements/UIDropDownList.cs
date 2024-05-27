@@ -97,6 +97,6 @@
             showArea.RemoveAll();
             expandView.ClearAllElements();
         }
-
+        public bool Any(Predicate<T> predicate) => expandView.InnerUIE.Cast<T>().Any(x => predicate(x));
     }
 }
