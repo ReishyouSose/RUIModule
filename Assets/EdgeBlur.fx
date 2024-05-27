@@ -1,6 +1,5 @@
 sampler tex0 : register(s0);
 
-int type;
 float2 resolution;
 float4 outer;
 float4 inner;
@@ -37,15 +36,11 @@ float CheckPos(float2 pos)
         x = GetLerpValue(outer.x, inner.x, pos.x);
     else
         x = GetLerpValue(outer.z, inner.z, pos.x);
-    if (type == 1)
-        return x;
     
     if (pos.y < center.y)
         y = GetLerpValue(outer.y, inner.y, pos.y);
     else
         y = GetLerpValue(outer.w, inner.w, pos.y);
-    if (type == 0)
-        return y;
     return min(x, y);
 }
 

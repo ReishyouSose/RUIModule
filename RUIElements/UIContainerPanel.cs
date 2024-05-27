@@ -197,7 +197,7 @@
                 var gd = Main.graphics.GraphicsDevice;
                 Rectangle oldScissor = gd.ScissorRectangle;
 
-                UISpbState(sb, true, true);
+                UISpbState(sb, true);
                 var originalRT2Ds = gd.GetRenderTargets();
 
                 var lastRTUsage = gd.PresentationParameters.RenderTargetUsage;
@@ -208,7 +208,7 @@
 
                 base.DrawChildren(sb);
 
-                UISpbState(sb, true, true, true);
+                UISpbState(sb, true, true);
 
                 gd.SetRenderTargets(originalRT2Ds);
                 gd.ScissorRectangle = oldScissor.Modified(-10, -10, 20, 20);
@@ -222,7 +222,7 @@
                 eff.CurrentTechnique.Passes[0].Apply();
                 sb.Draw(RUISystem.Render, Vector2.Zero, Color.White);
 
-                UISpbState(sb, false);
+                UISpbState(sb);
                 gd.PresentationParameters.RenderTargetUsage = lastRTUsage;
                 gd.ScissorRectangle = oldScissor;
             }

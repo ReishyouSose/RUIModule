@@ -108,7 +108,7 @@ namespace RUIModule.RUIElements
             {
                 return;
             }
-            bool isMouseHover = ParentElement.GetCanHitBox().Contains(Main.MouseScreen.ToPoint());
+            bool isMouseHover = View.GetCanHitBox().Contains(Main.MouseScreen.ToPoint());
             if (!drawBorder)
             {
                 if (ViewMovableX > 0 && (isMouseHover || isMouseDown || isDragging) && alpha < 1f)

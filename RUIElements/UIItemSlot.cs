@@ -29,19 +29,7 @@ namespace RUIModule.RUIElements
         /// 框内物品
         /// </summary>
         public Item item;
-        /// <summary>
-        /// 框的绘制的拐角尺寸
-        /// </summary>
-        public Vector2 CornerSize { get; set; }
-        /// <summary>
-        /// 绘制颜色
-        /// </summary>
-        public Color DrawColor { get; set; }
-        public Color StackColor { get; set; }
-        /// <summary>
-        /// 介绍
-        /// </summary>
-        public string Tooltip { get; set; }
+        public readonly float scale;
         /// <summary>
         /// 更改物品时调用
         /// </summary>
@@ -58,26 +46,20 @@ namespace RUIModule.RUIElements
         /// </summary>
         public event ExchangeItemHandler OnPutItem;
         public void PutItem() => OnPutItem?.Invoke(this);
-        /// <summary>
-        /// 透明度
-        /// </summary>
-        public float Opacity { get; set; }
 
         /// <param name="texture"></param>
-        public UIItemSlot(Item item = null, Texture2D texture = default)
+        public UIItemSlot(Item item = null, float scale = 1f)
         {
-            Slot = new(null, 0);
+            Slot = new(null, 0, scale);
             Register(Slot);
-            Opacity = 1f;
             this.item = item?.Clone() ?? new Item();
             if (item != null)
             {
                 Main.instance.LoadItem(item.type);
             }
-            StackColor = DrawColor = Color.White;
-            CornerSize = new Vector2(10, 10);
-            Tooltip = "";
-            SetSize(52, 52);
+            this.scale = scale;
+            int size = (int)(52 * scale);
+            SetSize(size, size);
             Info.IsSensitive = true;
         }
         public override void LoadEvents()
@@ -203,7 +185,7 @@ namespace RUIModule.RUIElements
                 Main.HoverItem = item.Clone();
             }
             float invScale = Main.inventoryScale;
-            Main.inventoryScale = 1f;
+            Main.inventoryScale = scale;
             ItemSlot.Draw(sb, ref item, 14, HitBox().TopLeft());
             Main.inventoryScale = invScale;
             //获取当前UI部件的信息

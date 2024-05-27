@@ -301,7 +301,7 @@ public static class RUIHelper
         }
         return result.ToString();
     }
-    public readonly static Color VnlColor = new Color(63, 82, 151)/* 0.7f*/;
+    public readonly static Color VnlColor = new(63, 82, 151)/* 0.7f*/;
     /// <summary>
     /// 转换为在平面内的四点坐标
     /// </summary>
@@ -309,11 +309,10 @@ public static class RUIHelper
     /// <returns></returns>
     public static Vector4 ToCoords(this Rectangle rec) => new(rec.Left, rec.Top, rec.Left + rec.Width, rec.Top + rec.Height);
     public readonly static RasterizerState CullNoneAndScissor = new() { CullMode = CullMode.None, ScissorTestEnable = true };
-    public static void UISpbState(SpriteBatch sb, bool scissorTestEnable, bool notUseMatrix = false, bool useShader = false)
+    public static void UISpbState(SpriteBatch sb, bool notUseMatrix = false, bool useShader = false)
     {
         sb.End();
         sb.Begin(useShader ? SpriteSortMode.Immediate : SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-            DepthStencilState.None, scissorTestEnable ? CullNoneAndScissor : RasterizerState.CullNone,
-            null, notUseMatrix ? Matrix.Identity : Main.UIScaleMatrix);
+            DepthStencilState.None, CullNoneAndScissor, null, notUseMatrix ? Matrix.Identity : Main.UIScaleMatrix);
     }
 }

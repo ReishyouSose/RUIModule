@@ -15,6 +15,7 @@ public class UIIconSlot : BaseUIElement
     public Texture2D icon;
     public Texture2D overrideSlot;
     public Color? borderColor;
+    public float scale;
     /// <summary>
     /// 蓝底0，选中9
     /// <br/>红底1，选中18
@@ -24,11 +25,13 @@ public class UIIconSlot : BaseUIElement
     /// <br/>暗红4，深红10
     /// <br/>白12，白框15，空白17
     /// </summary>
-    public UIIconSlot(Texture2D icon, int slotID = 0)
+    public UIIconSlot(Texture2D icon, int slotID = 0, float scale = 1)
     {
         this.icon = icon;
         this.slotID = slotID;
-        SetSize(52, 52);
+        int size = (int)(52 * scale);
+        SetSize(size, size);
+        this.scale = scale;
     }
     public override void DrawSelf(SpriteBatch sb)
     {

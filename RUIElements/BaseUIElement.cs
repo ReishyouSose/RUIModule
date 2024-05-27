@@ -398,12 +398,8 @@
             get
             {
                 Vector2 location = Vector2.Transform(Info.Location, Main.UIScaleMatrix),
-                    bottomRight = Vector2.Transform(Info.Location + Info.Size, Main.UIScaleMatrix);
-
-                return new((int)location.X, (int)location.Y,
-                    (int)Math.Ceiling(Math.Max(bottomRight.X - location.X, 0)),
-                    (int)Math.Ceiling(Math.Max(bottomRight.Y - location.Y, 0))
-);
+                    size = Vector2.Transform(Info.Size, Main.UIScaleMatrix);
+                return new((int)location.X, (int)location.Y, (int)Math.Ceiling(size.X), (int)Math.Ceiling(size.Y));
             }
         }
 
@@ -532,19 +528,19 @@
             //如果启用溢出隐藏
             if (Info.HiddenOverflow)
             {
+                UISpbState(sb);
                 //设定gd是画笔绑定的图像设备
                 GraphicsDevice gd = sb.GraphicsDevice;
                 //储存绘制原剪切矩形
                 Rectangle scissorRectangle = gd.ScissorRectangle;
                 gd.ScissorRectangle = Rectangle.Intersect(gd.ScissorRectangle, HiddenOverflowRectangle);
-                UISpbState(sb, true);
 
                 //绘制子元素
                 DrawChildren(sb);
 
                 //将剪切矩形换回原剪切矩形
+                UISpbState(sb);
                 gd.ScissorRectangle = scissorRectangle;
-                UISpbState(sb, false);
             }
             else
                 DrawChildren(sb);
