@@ -149,31 +149,28 @@
             Vector2 v = Vector2.Zero;
             _innerPanel.ChildrenElements.ForEach(element =>
             {
-                if (element.IsVisible)
+                v.X = element.Info.TotalLocation.X - _innerPanel.Info.Location.X;
+                v.Y = element.Info.TotalLocation.Y - _innerPanel.Info.Location.Y;
+                if (innerPanelMinLocation.X > v.X)
                 {
-                    v.X = element.Info.TotalLocation.X - _innerPanel.Info.Location.X;
-                    v.Y = element.Info.TotalLocation.Y - _innerPanel.Info.Location.Y;
-                    if (innerPanelMinLocation.X > v.X)
-                    {
-                        innerPanelMinLocation.X = v.X;
-                    }
+                    innerPanelMinLocation.X = v.X;
+                }
 
-                    if (innerPanelMinLocation.Y > v.Y)
-                    {
-                        innerPanelMinLocation.Y = v.Y;
-                    }
-                    v.X = element.Info.TotalLocation.X + element.Info.TotalSize.X - _innerPanel.Info.Location.X;
-                    v.Y = element.Info.TotalLocation.Y + element.Info.TotalSize.Y - _innerPanel.Info.Location.Y;
+                if (innerPanelMinLocation.Y > v.Y)
+                {
+                    innerPanelMinLocation.Y = v.Y;
+                }
+                v.X = element.Info.TotalLocation.X + element.Info.TotalSize.X - _innerPanel.Info.Location.X;
+                v.Y = element.Info.TotalLocation.Y + element.Info.TotalSize.Y - _innerPanel.Info.Location.Y;
 
-                    if (innerPanelMaxLocation.X < v.X)
-                    {
-                        innerPanelMaxLocation.X = v.X;
-                    }
+                if (innerPanelMaxLocation.X < v.X)
+                {
+                    innerPanelMaxLocation.X = v.X;
+                }
 
-                    if (innerPanelMaxLocation.Y < v.Y)
-                    {
-                        innerPanelMaxLocation.Y = v.Y;
-                    }
+                if (innerPanelMaxLocation.Y < v.Y)
+                {
+                    innerPanelMaxLocation.Y = v.Y;
                 }
             });
         }

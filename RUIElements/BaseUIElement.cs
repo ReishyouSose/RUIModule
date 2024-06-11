@@ -659,6 +659,11 @@
                     Info.Location.Y = Info.TotalLocation.Y + top;
                     Info.Size.X = Info.TotalSize.X - Info.RightMargin.GetPixelBaseParent(ParentElement.Info.Size.X) - left;
                     Info.Size.Y = Info.TotalSize.Y - Info.ButtomMargin.GetPixelBaseParent(ParentElement.Info.Size.Y) - top;
+                    BaseUIElement view = ParentElement?.ParentElement;
+                    if (view is UIContainerPanel)
+                    {
+                        Info.IsVisible = view.HiddenOverflowRectangle.Intersects(NewRec(Info.TotalLocation, Info.TotalSize));
+                    }
                 }
                 Info.HitBox = new Rectangle((int)Info.Location.X, (int)Info.Location.Y, (int)Info.Size.X, (int)Info.Size.Y);
                 Info.TotalHitBox = new Rectangle((int)Info.TotalLocation.X, (int)Info.TotalLocation.Y, (int)Info.TotalSize.X, (int)Info.TotalSize.Y);
