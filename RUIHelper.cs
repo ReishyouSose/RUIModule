@@ -209,6 +209,7 @@ public static class RUIHelper
         Vector2 zoom = unit / target.Value;
         return 1f / Math.Max(zoom.Length(), 1);
     }
+    public static float AutoScale(this Vector2 unit, float target) => unit.AutoScale(new Vector2(target));
 
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<KeyValuePair<TKey, TValue>, bool> func)
     {
