@@ -210,6 +210,12 @@ public static class RUIHelper
         return 1f / Math.Max(zoom.Length(), 1);
     }
 
+    /// <summary>
+    /// 获取相对于给定大小的自动缩放修正
+    /// </summary>
+    /// <returns>用于乘算的修正值</returns>
+    public static float AutoScale(this Vector2 unit, float scale) => unit.AutoScale(new Vector2(scale));
+
     public static void RemoveAll<TKey, TValue>(this Dictionary<TKey, TValue> dic, Func<KeyValuePair<TKey, TValue>, bool> func)
     {
         List<TKey> keys = [];

@@ -798,23 +798,23 @@
             if (cal)
                 Calculation();
         }
-        public void SetPos(Vector2 pos, bool cal = true) => SetPos(pos.X, pos.Y, cal: cal);
-        public void SetCenter(float x, float y, float Xpercent = 0, float Ypercent = 0, bool cal = true)
+        public void SetPos(Vector2 pos, bool cal = false) => SetPos(pos.X, pos.Y, cal: cal);
+        public void SetCenter(float x, float y, float Xpercent = 0, float Ypercent = 0, bool cal = false)
         {
             Info.Left.Set(x - Info.Width.Pixel / 2f, Xpercent);
             Info.Top.Set(y - Info.Height.Pixel / 2f, Ypercent);
             if (cal)
                 Calculation();
         }
-        public void SetCenter(Vector2 pos, bool cal = true) => SetCenter(pos.X, pos.Y, cal: cal);
-        public void SetSize(float x, float y, float xper = 0, float yper = 0, bool cal = true)
+        public void SetCenter(Vector2 pos, bool cal = false) => SetCenter(pos.X, pos.Y, cal: cal);
+        public void SetSize(float x, float y, float xper = 0, float yper = 0, bool cal = false)
         {
             Info.Width.Set(x, xper);
             Info.Height.Set(y, yper);
             if (cal)
                 Calculation();
         }
-        public void SetSize(Vector2 size, bool cal = true) => SetSize(size.X, size.Y, cal: cal);
+        public void SetSize(Vector2 size, bool cal = false) => SetSize(size.X, size.Y, cal: cal);
         public void SetPercent(float x, float y)
         {
             Info.Width.Percent = x;

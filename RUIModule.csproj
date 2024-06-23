@@ -1,27 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  
   </PropertyGroup>
 
   <Import Project="..\tModLoader.targets" />
-  <ItemGroup>
-    <None Remove="Assets\Adjust.png" />
-    <None Remove="Assets\Adjust2.png" />
-    <None Remove="Assets\BackGround.png" />
-    <None Remove="Assets\Close.png" />
-    <None Remove="Assets\Close2.png" />
-    <None Remove="Assets\Decrease.png" />
-    <None Remove="Assets\EdgeBlur.fx" />
-    <None Remove="Assets\Fold.png" />
-    <None Remove="Assets\HScrollBD.png" />
-    <None Remove="Assets\HScrollInner.png" />
-    <None Remove="Assets\Increase.png" />
-    <None Remove="Assets\Move.png" />
-    <None Remove="Assets\Side.png" />
-    <None Remove="Assets\Slot.png" />
-    <None Remove="Assets\Unfold.png" />
-    <None Remove="Assets\VScrollBD.png" />
-    <None Remove="Assets\VScrollInner.png" />
-  </ItemGroup>
 </Project>

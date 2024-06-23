@@ -1,5 +1,26 @@
 ﻿namespace RUIModule.RUIElements;
-
+public enum IconSlotID
+{
+    Blue, // 蓝底0
+    Red, // 红底1
+    Green, // 绿2
+    BluePurple, // 蓝紫3
+    DarkRed, // 暗红4
+    DesiccatedGreen, // 枯绿5
+    GrayBlue, // 灰蓝6
+    DarkGreen, // 暗绿7
+    DeepBlue, // 深蓝8
+    SelectedBlue, // 选中蓝底9
+    DeepRed, // 深红10
+    DarkBlue, // 暗蓝11
+    White, // 白12
+    GoldBase, // 金底13
+    LakeBlue, // 湖蓝14
+    WhiteFrame, // 白框15
+    SelectedGold, // 选中金底16
+    Blank, // 空白17
+    SelectedRed  // 选中红底18
+}
 public class UIIconSlot : BaseUIElement
 {
     /// <summary>
